@@ -9,3 +9,4 @@ git commands:
 - *git checkout branchname* (switches to other branch)
 - *git pull origin branchname* (pulls from branchname to branch you are currently in)
 - *git checkout -b branchname* (creates new branch)
+- *git push --set-upstream origin branchname* (???????)
