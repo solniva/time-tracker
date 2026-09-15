@@ -2,7 +2,8 @@
   "name": "Time Tracker",
   "debug": true,
   "files": {
-    "./utils.py": "utils.py"
+    "./utils.py": "utils.py",
+    "./plotting.py": "plotting.py"
   },
   "js_modules": {
     "main": {
