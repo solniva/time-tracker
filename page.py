@@ -1,6 +1,6 @@
 from puepy import Application, Page, t
 #import utils
-#import plotting
+import plotting
 from puepy.core import html
 
 app = Application()
@@ -9,7 +9,7 @@ app = Application()
 class TimeTrackerPage(Page):
     def initial(self):
         self.radius = 2
-        #plotting.make_images()
+        plotting.make_images()
         return {"dict": "ionary"}
         
     def populate(self):
