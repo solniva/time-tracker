@@ -1,14 +1,15 @@
 {
   "name": "Time Tracker",
   "debug": true,
-  "files": {},
+  "files": {
+    "./utils.py": "utils.py"
+  },
   "js_modules": {
     "main": {
       "https://cdn.jsdelivr.net/npm/morphdom@2.7.2/+esm": "morphdom"
     }
   },
   "packages": [
-    "./puepy-0.6.5-py3-none-any.whl",
-    "utils.py"
+    "./puepy-0.6.5-py3-none-any.whl"
   ]
 }
