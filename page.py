@@ -1,5 +1,5 @@
 from puepy import Application, Page, t
-#import utils
+import utils
 
 app = Application()
 
@@ -11,6 +11,6 @@ class TimeTrackerPage(Page):
         
 
     def populate(self):
-        t.h1(f"radiusen er {self.radius}")
+        t.h1(f"radiusen er {self.radius}, og omkretsen er {utils.omkrets(self.radius)}")
 
 app.mount("#app")
