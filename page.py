@@ -14,6 +14,6 @@ class TimeTrackerPage(Page):
         
     def populate(self):
         #t.h1(f"radiusen er {self.radius} og omkretsen er {utils.omkrets(self.radius)}")
-        t(html("<img src='timerA26.png' alt='Bilde' />"))
+        t(html("<img src='timerV26.png' alt='Bilde' />"))
 
 app.mount("#app")
