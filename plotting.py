@@ -55,7 +55,7 @@ def plotbarchart(totals, totalsweekdays, sickintervals, weekdays, name):
     plt.savefig(f'antall timer studert/ukedager/ukedager{name}.png')
     plt.close()
 
-def plotstackedbarchart(totals, totalshourindextype, courses, name):
+def plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, name):
     colours = ['mediumslateblue', 'slateblue', 'mediumpurple', 'blueviolet']
     bottom = 0
     for i in range (len(totalshourindextype)):
@@ -124,8 +124,8 @@ def monthobject(numberofcourses):
                             'totalscourses': np.zeros(numberofcourses)})
     return monthtotals
 
-def plotall(totalswithday, totalsweekdays, weekdays, totalshourindextype, totalscourses,
-            courses, numberofcourses, filepath, name):
+def plotall(totalswithday, totalsweekdays, weekdays, hoursindextype, totalshourindextype,
+            totalscourses, courses, numberofcourses, filepath, name):
     totalswithday = np.array(totalswithday)
     totals = list(totalswithday[:,0])
     totalswithday = list(totalswithday)
@@ -133,69 +133,69 @@ def plotall(totalswithday, totalsweekdays, weekdays, totalshourindextype, totals
     sickintervals = sick(totalswithday)
     plothours(totals, totalhours, sickintervals, filepath, name)
     plotbarchart(totals, totalsweekdays, sickintervals, weekdays, name)
-    plotstackedbarchart(totals, totalshourindextype, courses, name)
+    plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, name)
     plotwriting(totalscourses, numberofcourses, courses, filepath, name)
 
+def make_images():
+    files = list(filter(os.path.isfile, glob.glob('*.json')))
+    files.sort(key = lambda x:os.path.getmtime(x))
+    filepath = files[-1]
+    name = gettitlename(filepath)
 
-files = list(filter(os.path.isfile, glob.glob('*.json')))
-files.sort(key = lambda x:os.path.getmtime(x))
-filepath = files[-1]
-name = gettitlename(filepath)
+    totalswithday = []
 
-totalswithday = []
-
-with open(filepath, 'r', encoding = 'utf-8') as f:
-    data = json.load(f)
-    firstelem = data[list(data.keys())[0]]
-    courses = list(firstelem.keys())
-    numberofcourses = len(courses) - 1
-    totalscourses = np.zeros(numberofcourses)
-    totalsweekdays = np.zeros(7)
-    weekdays = np.zeros(7)
-    totalshourindextype = np.zeros((4, numberofcourses))
-    hoursindextype = list(list(firstelem[list(firstelem.keys())[1]].keys()))
-    monthtotals = monthobject(numberofcourses)
-    del hoursindextype[-1]
-    del courses[0]
-    for key, date in data.items():
-        totaldate = 0
-        counter = 0
-        weekday = date['weekday']
-        month = key.split(" ")[0]
-        monthdatetime = datetime.strptime(month, "%b")
-        monthnumber = monthdatetime.month - 1
-        for course in date.keys():
-            if course == 'weekday':
-                continue
-            time = date[course]['Total']
-            totaldate += time
-            totalscourses[counter] += time
-            monthtotals[monthnumber]['totalscourses'][counter] += time
-            for typeindex, type in enumerate(date[course]):
-                if type == 'Total':
+    with open(filepath, 'r', encoding = 'utf-8') as f:
+        data = json.load(f)
+        firstelem = data[list(data.keys())[0]]
+        courses = list(firstelem.keys())
+        numberofcourses = len(courses) - 1
+        totalscourses = np.zeros(numberofcourses)
+        totalsweekdays = np.zeros(7)
+        weekdays = np.zeros(7)
+        totalshourindextype = np.zeros((4, numberofcourses))
+        hoursindextype = list(list(firstelem[list(firstelem.keys())[1]].keys()))
+        monthtotals = monthobject(numberofcourses)
+        del hoursindextype[-1]
+        del courses[0]
+        for key, date in data.items():
+            totaldate = 0
+            counter = 0
+            weekday = date['weekday']
+            month = key.split(" ")[0]
+            monthdatetime = datetime.strptime(month, "%b")
+            monthnumber = monthdatetime.month - 1
+            for course in date.keys():
+                if course == 'weekday':
                     continue
-                totalshourindextype[typeindex][counter] += date[course][list(date[course].keys())[typeindex]]
-                monthtotals[monthnumber]['totalshoursindextype'][typeindex][counter] += date[course][list(date[course].keys())[typeindex]]
-            counter += 1
-        totalswithday.append((totaldate, weekday))
-        totalsweekdays[weekday] += totaldate
-        weekdays[weekday] += 1
-        monthtotals[monthnumber]['totalswithday'].append((totaldate, weekday))
-        monthtotals[monthnumber]['totalsweekdays'][weekday] += totaldate
-        monthtotals[monthnumber]['weekdays'][weekday] += 1
+                time = date[course]['Total']
+                totaldate += time
+                totalscourses[counter] += time
+                monthtotals[monthnumber]['totalscourses'][counter] += time
+                for typeindex, type in enumerate(date[course]):
+                    if type == 'Total':
+                        continue
+                    totalshourindextype[typeindex][counter] += date[course][list(date[course].keys())[typeindex]]
+                    monthtotals[monthnumber]['totalshoursindextype'][typeindex][counter] += date[course][list(date[course].keys())[typeindex]]
+                counter += 1
+            totalswithday.append((totaldate, weekday))
+            totalsweekdays[weekday] += totaldate
+            weekdays[weekday] += 1
+            monthtotals[monthnumber]['totalswithday'].append((totaldate, weekday))
+            monthtotals[monthnumber]['totalsweekdays'][weekday] += totaldate
+            monthtotals[monthnumber]['weekdays'][weekday] += 1
 
-plotall(totalswithday, totalsweekdays, weekdays, totalshourindextype, totalscourses,
-            courses, numberofcourses, filepath, name)
+    plotall(totalswithday, totalsweekdays, weekdays, hoursindextype, totalshourindextype,
+            totalscourses, courses, numberofcourses, filepath, name)
 
-for monthnumber, month in enumerate(monthtotals):
-    name = gettitlename(filepath, monthnumber)
-    if len(month['totalswithday']) == 0:
-        continue
-    totalswithday = month['totalswithday']
-    totalsweekdays = month['totalsweekdays']
-    weekdays = month['weekdays']
-    totalscourses = month['totalscourses']
-    totalshourindextype = month['totalshoursindextype']
+    for monthnumber, month in enumerate(monthtotals):
+        name = gettitlename(filepath, monthnumber)
+        if len(month['totalswithday']) == 0:
+            continue
+        totalswithday = month['totalswithday']
+        totalsweekdays = month['totalsweekdays']
+        weekdays = month['weekdays']
+        totalscourses = month['totalscourses']
+        totalshourindextype = month['totalshoursindextype']
 
-    plotall(totalswithday, totalsweekdays, weekdays, totalshourindextype, totalscourses,
-            courses, numberofcourses, filepath, name)
+        plotall(totalswithday, totalsweekdays, weekdays, hoursindextype, totalshourindextype,
+                totalscourses, courses, numberofcourses, filepath, name)
