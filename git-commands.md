@@ -5,3 +5,5 @@ git commands:
 - *restore* (undo all changes since last commit(?)/add(?))
 - *commit -m "comments"* (commit files that have been staged)
 - *push/pull* (push or pull to branch)
+- *git branch* (shows the branches on your computer, and which one you are currently in)
+- *git checkout branchname* (switches to other branch)
