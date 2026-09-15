@@ -6,3 +6,5 @@ git commands:
 - *commit -m "comments"* (commit files that have been staged)
 - *push/pull* (push or pull to branch)
 - *git pull origin main* (pulls to branch from main)
+- *git branch* (shows the branches on your computer, and which one you are currently in)
+- *git checkout branchname* (switches to other branch)
