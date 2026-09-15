@@ -9,8 +9,9 @@ class TimeTrackerPage(Page):
         self.radius = 2
         return {"dict": "ionary"}
         
-
     def populate(self):
         t.h1(f"radiusen er {self.radius} og omkretsen er {utils.omkrets(self.radius)}")
 
 app.mount("#app")
+
+print("hei")
