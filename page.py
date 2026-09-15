@@ -1,0 +1,18 @@
+from puepy import Application, Page, t
+import numpy as np
+
+app = Application()
+
+
+@app.page()
+class TimeTrackerPage(Page):
+    r = 2
+
+    def omkrets(r):
+        return 2*np.pi*r
+    
+    def populate(self, r):
+        t.h1("Hello, World!")
+        t.h2(f"Omkretsen av en sirkel med radius {r} er {omkrets(r)}")
+
+app.mount("#app")
