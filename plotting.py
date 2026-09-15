@@ -28,7 +28,7 @@ def plothours(totals, totalhours, sickintervals, filepath, name):
     else:
         custom_legend = [Line2D([0], [0], color='tab:blue', lw=3), Line2D([0], [0], color='tab:blue', lw=3), Line2D([0], [0], color='tab:gray', lw=3)]
         plt.legend(custom_legend, [f'totalt= {np.round(totalhours,2)}h', f'gj.snitt, u/syk = {np.round(np.mean(totalhoursmean),2)}h', f"syk {antall_dager_syk} dager"])
-    plt.savefig(f'antall timer studert/timer/timer{name}.png')
+    plt.savefig(f'timer{name}.png')
     plt.close()
 
 def plotbarchart(totals, totalsweekdays, sickintervals, weekdays, name):
@@ -52,7 +52,7 @@ def plotbarchart(totals, totalsweekdays, sickintervals, weekdays, name):
     plt.title(f'antall timer studert per ukedag i løpet av {len(totals)} dager, {name}')
     plt.grid(axis = 'y', zorder = 0, linestyle=':')
     plt.legend()
-    plt.savefig(f'antall timer studert/ukedager/ukedager{name}.png')
+    plt.savefig(f'ukedager{name}.png')
     plt.close()
 
 def plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, name):
@@ -66,7 +66,7 @@ def plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, na
     plt.title(f'fordeling av tidsbruk per fag på {len(totals)} dager, {name}')
     plt.grid(axis = 'y', zorder = 0, linestyle=':')
     plt.legend()
-    plt.savefig(f'antall timer studert/fordeling/fordeling{name}.png')
+    plt.savefig(f'fordeling{name}.png')
     plt.close()
 
 def plotwriting(totalscourses, numberofcourses, courses, filepath, name):
@@ -81,7 +81,7 @@ def plotwriting(totalscourses, numberofcourses, courses, filepath, name):
     for i in range(numberofcourses):
         draw.text((15, placement), f"antall timer brukt på {courses[i]}: {np.round(totalscourses[i], 1)}", font=font, fill=(0, 0, 0))
         placement += spacing
-    image.save(f'antall timer studert/fag/fag{name}.png')
+    image.save(f'fag{name}.png')
 
 def sick(totalswithday):
     totalswithday = totalswithday[::-1]
