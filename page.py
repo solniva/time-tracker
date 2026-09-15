@@ -10,6 +10,6 @@ class TimeTrackerPage(Page):
         
 
     def populate(self):
-        t.h1("Hello, World!")
+        t.h1("World!")
 
 app.mount("#app")
