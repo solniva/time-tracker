@@ -1,5 +1,5 @@
 from puepy import Application, Page, t
-import code as c
+#import code as c
 
 app = Application()
 
@@ -8,6 +8,6 @@ class TimeTrackerPage(Page):
 
     def populate(self):
         t.h1("Hello, World!")
-        t.h2(f"Omkretsen av en sirkel med radius 2 er {c.omkrets(2)}")
+        #t.h2(f"Omkretsen av en sirkel med radius 2 er {c.omkrets(2)}")
 
 app.mount("#app")
