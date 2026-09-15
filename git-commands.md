@@ -5,3 +5,4 @@ git commands:
 - *restore* (undo all changes since last commit(?)/add(?))
 - *commit -m "comments"* (commit files that have been staged)
 - *push/pull* (push or pull to branch)
+- *git pull origin main* (pulls to branch from main)
