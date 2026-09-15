@@ -1,5 +1,4 @@
 from puepy import Application, Page, t
-import numpy as np
 
 app = Application()
 
@@ -9,7 +8,7 @@ class TimeTrackerPage(Page):
     r = 2
 
     def omkrets(r):
-        return 2*np.pi*r
+        return 2*r
     
     def populate(self, r):
         t.h1("Hello, World!")
