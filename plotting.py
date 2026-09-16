@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from PIL import Image, ImageDraw, ImageFont
 import json
-import glob
-import os
+#import glob
+#import os
 from datetime import datetime
 
 def plothours(totals, totalhours, sickintervals, filepath, name):
