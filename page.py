@@ -1,6 +1,6 @@
 from puepy import Application, Page, t
 import utils
-import plotting
+#import plotting
 from puepy.core import html
 
 app = Application()

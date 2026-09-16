@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from PIL import Image, ImageDraw, ImageFont
 import json
 #import glob
 #import os
@@ -69,20 +68,6 @@ def plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, na
     plt.savefig(f'fordeling{name}.png')
     plt.close()
 
-def plotwriting(totalscourses, numberofcourses, courses, filepath, name):
-    spacing = 50
-    height = spacing * (numberofcourses + 1) + 15
-    image = Image.new("RGB", (512, height), "white")
-    draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", size=25)
-    placement = 15
-    draw.text((15, placement), f"TIMER JOBBET PER FAG {name}", font=font, fill=(0, 0, 0))
-    placement += spacing
-    for i in range(numberofcourses):
-        draw.text((15, placement), f"antall timer brukt på {courses[i]}: {np.round(totalscourses[i], 1)}", font=font, fill=(0, 0, 0))
-        placement += spacing
-    image.save(f'fag{name}.png')
-
 def sick(totalswithday):
     totalswithday = totalswithday[::-1]
     sickintervals = []
@@ -134,7 +119,6 @@ def plotall(totalswithday, totalsweekdays, weekdays, hoursindextype, totalshouri
     plothours(totals, totalhours, sickintervals, filepath, name)
     plotbarchart(totals, totalsweekdays, sickintervals, weekdays, name)
     plotstackedbarchart(totals, hoursindextype, totalshourindextype, courses, name)
-    plotwriting(totalscourses, numberofcourses, courses, filepath, name)
 
 def make_images():
     files = list(filter(os.path.isfile, glob.glob('*.json')))

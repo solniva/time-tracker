@@ -1,2 +1,4 @@
+import numpy as np
+
 def omkrets(r):
-    return 2*r*3.14
+    return 2*r*np.pi
