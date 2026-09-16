@@ -17,3 +17,8 @@ class TimeTrackerPage(Page):
         t(html("<img src='timerA26.png' alt='Bilde' />"))
 
 app.mount("#app")
+
+
+
+
+#
