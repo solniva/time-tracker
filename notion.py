@@ -1,15 +1,42 @@
 import requests
-
-url = "https://api.notion.com/v1/databases/3a2ae770cc108036a497d815efcae57b"
+import json
 
 token = input("Notion token: ")
-print(token)
-
+data_sourceID = "095ae770-cc10-8390-b5c6-07b81c93f683"
+url = "https://api.notion.com/v1/data_sources/095ae770-cc10-8390-b5c6-07b81c93f683/query"
 headers = {
     "Notion-Version": "2026-03-11",
-    "Authorization": f"Bearer {token}"
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json"
+}
+payload = {
+    "sorts": [{ "property": "dato", "direction": "ascending"}]
 }
 
-response = requests.get(url, headers=headers)
+def readDatabase(headers):
+    response = requests.post(url, json=payload, headers=headers)
+    
+    data = response.json()
+    # kode 200 er good
+    print(response.status_code)
 
-print(response.text)
+    # kun for å se dataene:
+    # with open('./test.json', 'w', encoding='utf8') as f:
+    #     json.dump(data, f, ensure_ascii=False)
+    return data
+
+data = readDatabase(headers)
+courseNames = list(list(data.values())[1][0].get('properties').keys())
+if 'dato' in courseNames:
+    courseNames.remove('dato')
+print(courseNames)
+
+# per day
+#for course in courseNames:
+
+
+
+print(list(data.values())[1][0].get('properties').get('numlinalg'))
+print(list(data.values())[1][0].get('properties').get('kjønn'))
+print(list(data.values())[1][0].get('properties').get('tekled'))
+print(list(list(data.values())[1][0].get('properties').get('matmod').get('rich_text'))[0].get('plain_text'))
