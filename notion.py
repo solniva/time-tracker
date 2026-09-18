@@ -1,5 +1,6 @@
 import requests
 import json
+import numpy as np
 
 token = input("Notion token: ")
 data_sourceID = "095ae770-cc10-8390-b5c6-07b81c93f683"
@@ -29,14 +30,19 @@ data = readDatabase(headers)
 courseNames = list(list(data.values())[1][0].get('properties').keys())
 if 'dato' in courseNames:
     courseNames.remove('dato')
+if 'tittel' in courseNames:
+    courseNames.remove('tittel')
 print(courseNames)
+numberOfCourses = len(courseNames)
 
-# per day
-#for course in courseNames:
+numberOfDays = len(list(data.values())[1])
 
-
-
-print(list(data.values())[1][0].get('properties').get('numlinalg'))
-print(list(data.values())[1][0].get('properties').get('kjønn'))
-print(list(data.values())[1][0].get('properties').get('tekled'))
-print(list(list(data.values())[1][0].get('properties').get('matmod').get('rich_text'))[0].get('plain_text'))
+for day in range(0, numberOfDays):
+    for course in courseNames:
+        text = list(data.values())[1][day].get('properties').get(course).get('rich_text')
+        if text is None or not any(text):
+            print(f"jobbet ikke med {course} idag")
+        else:
+            time_string = list(text)[0].get('plain_text')
+            print(f"jobbet {time_string} med {course}")
+    print("#################################################################################")
